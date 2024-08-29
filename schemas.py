@@ -1,6 +1,8 @@
 from typing import List, Union
 from pydantic import BaseModel
-from datetime import date
+from datetime import datetime, date
+from typing import Optional
+
 
 # ProfileBase 생성
 class ProfileBase(BaseModel):
@@ -19,21 +21,24 @@ class ProfileCreate(ProfileBase):
 # API에서 데이터를 읽을 때/반환할 때 사용될 모델
 class Profile(ProfileBase):
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 # DiaryBase 생성
 class DiaryBase(BaseModel):
-    date: Union[date, None] = None
-    keywords: Union[str, None] = None
-    contents: Union[str, None] = None
-    happy: Union[str, None] = None
+    id: int
+    date: Optional[datetime] = None  # timestamp 타입을 지원하는 datetime 사용
+    keywords: Optional[str] = None
+    contents: Optional[str] = None
+    happy: Optional[int] = None
+    sad: Optional[int] = None
+    love: Optional[int] = None
     user_name: str
 
-# DiaryCreate 생성 (DiaryBase 상속)
+    class Config:
+        orm_mode = True
+
 class DiaryCreate(DiaryBase):
     pass
 
-# API에서 데이터를 읽을 때/반환할 때 사용될 모델
-class Diary(DiaryBase):
-    class Config:
-        from_attributes = True
+class DiaryRead(DiaryBase):
+    pass

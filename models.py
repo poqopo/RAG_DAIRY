@@ -1,9 +1,6 @@
-from sqlalchemy import Column, Date, String, Integer
+from sqlalchemy import Column, Integer, String, DateTime, Sequence, Date
 from database import Base
-
-# database.py에서 생성한 Base import
-from database import Base
-
+from datetime import datetime
 
 # Base를 상속 받아 SQLAlchemy model 생성
 class Profile(Base):
@@ -17,13 +14,14 @@ class Profile(Base):
     keywords = Column(String, nullable=True)
     contents = Column(String, nullable=True)
 
-
-class Diary(Base):
+class DiaryModel(Base):
     __tablename__ = "diary"
 
-    id = Column(Integer, primary_key=True, index=True)  # 기본 키로 사용할 id 컬럼 추가
-    date = Column(Date, nullable=True)
+    id = Column(Integer, Sequence('diary_id_seq'), primary_key=True, index=True)
+    date = Column(DateTime, nullable=True, default=datetime.utcnow)  # timestamp 타입의 date 필드, 기본값은 현재 시간
     keywords = Column(String, nullable=True)
     contents = Column(String, nullable=True)
-    happy = Column(String, nullable=True)
+    happy = Column(Integer, nullable=True)
+    sad = Column(Integer, nullable=True)
+    love = Column(Integer, nullable=True)
     user_name = Column(String, nullable=False, name="user")

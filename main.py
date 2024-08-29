@@ -54,21 +54,21 @@ def update_profile(user_name: str, profile_update: schemas.ProfileCreate, db: Se
     return updated_user
 
 # 다이어리 생성
-@app.post("/profiles/{user_name}/diaries/", response_model=schemas.Diary)
+@app.post("/profiles/{user_name}/diaries/", response_model=schemas.DiaryCreate)
 def create_diary_for_user(
     user_name: str, diary: schemas.DiaryCreate, db: Session = Depends(get_db)
 ):
     db_user = crud.get_user(db, user_id=user_name)
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
-    db_diary = models.Diary(**diary.dict(), user_name=user_name)
+    db_diary = models.DiaryModel(**diary.model_dump())
     db.add(db_diary)
     db.commit()
     db.refresh(db_diary)
     return db_diary
 
-# 다이어리 읽기
-@app.get("/diaries/", response_model=List[schemas.Diary])
+
+@app.get("/diaries/{user_name}", response_model=List[schemas.DiaryRead])
 def read_diaries(skip: int = 0, limit: int = 100, user_name: str = None, db: Session = Depends(get_db)):
     diaries = crud.get_diaries(db, user_id=user_name, skip=skip, limit=limit)
     return diaries

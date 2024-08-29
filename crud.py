@@ -8,6 +8,9 @@ import models, schemas
 def get_user(db: Session, user_id: str):
     return db.query(models.Profile).filter(models.Profile.user_name == user_id).first()
 
+def get_users(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Profile).offset(skip).limit(limit).all()
+
 def create_user(db: Session, user: schemas.ProfileCreate):
     # SQLAlchemy 모델 인스턴스 만들기
     db_user = models.Profile(
@@ -26,7 +29,7 @@ def create_user(db: Session, user: schemas.ProfileCreate):
 
 # 데이터 읽기 - 여러 항목 읽어오기
 def get_diaries(db: Session, user_id: str, skip: int = 0, limit: int = 100):
-    return db.query(models.Diary).filter(models.Diary.user_name == user_id).offset(skip).limit(limit).all()
+    return db.query(models.DiaryModel).filter(models.DiaryModel.user_name == user_id).offset(skip).limit(limit).all()
 
 
 def update_profile(db: Session, user_name: str, updated_data: schemas.ProfileCreate):
