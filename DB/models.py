@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime, Sequence, Date
-from database import Base
+from DB.database import Base
 from datetime import datetime
 
 # Base를 상속 받아 SQLAlchemy model 생성
