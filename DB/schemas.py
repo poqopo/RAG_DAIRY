@@ -23,9 +23,7 @@ class Profile(ProfileBase):
     class Config:
         orm_mode = True
 
-# DiaryBase 생성
 class DiaryBase(BaseModel):
-    id: int
     date: Optional[datetime] = None  # timestamp 타입을 지원하는 datetime 사용
     keywords: Optional[str] = None
     contents: Optional[str] = None
@@ -41,4 +39,4 @@ class DiaryCreate(DiaryBase):
     pass
 
 class DiaryRead(DiaryBase):
-    pass
+    id: int

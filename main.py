@@ -54,7 +54,7 @@ def update_profile(user_name: str, profile_update: schemas.ProfileCreate, db: Se
     return updated_user
 
 # 다이어리 생성
-@app.post("/profiles/{user_name}/diaries/", response_model=schemas.DiaryCreate)
+@app.post("/diaries/{user_name}", response_model=schemas.DiaryCreate)
 def create_diary_for_user(
     user_name: str, diary: schemas.DiaryCreate, db: Session = Depends(get_db)
 ):
