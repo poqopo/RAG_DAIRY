@@ -1,2 +1,8 @@
 fastapi[all]
 sqlalchemy
+dotenv
+faiss
+langchain_community.vectorstores
+langchain_community.docstore.in_memory
+langchain_openai
+langchain_core
